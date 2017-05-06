@@ -4,6 +4,17 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+void charArrayToIntArray(charArray* cArray, int* intArray){
+	size_t i, parsed;
+	short sign = 1;
+
+	for(i=0;parsed=0; i<cArray->size;i++){
+	if(true){
+	} else {
+	}
+	}
+}
+
 charArray readFromFile(char* path){
 	//Handle to file
 	FILE * file;
