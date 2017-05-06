@@ -1,7 +1,14 @@
 #pragma once
 #include <stdio.h>
-#include <math.h>
+#include <malloc.h>
 
-void readFromFile();
+struct charArray {
+	int size;
+	char* contents;
+};
+
+charArray readFromFile(char* path);
 void charArrayToIntArray();
 void goldCodeGenerator();
+
+
