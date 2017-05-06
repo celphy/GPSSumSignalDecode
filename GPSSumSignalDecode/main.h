@@ -8,7 +8,7 @@ struct charArray {
 };
 
 charArray readFromFile(char* path);
-void charArrayToIntArray(char* charArray, int* intArray);
+void charArrayToIntArray(charArray* cArray, int* intArray);
 void goldCodeGenerator();
 
 

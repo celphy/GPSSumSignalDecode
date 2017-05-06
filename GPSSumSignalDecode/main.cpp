@@ -4,18 +4,28 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+
 void charArrayToIntArray(charArray* cArray, int* intArray){
 	size_t i, parsed;
 	short sign = 1;
 
-	for(i=0;parsed=0; i<cArray->size;i++){
-	if(true){
-	} else {
-	}
+	for(i=0,parsed=0; i<cArray->size;i++){
+		//Skip blanks
+		if(cArray->contents[i] != ' '){
+			//Do we have a leading '-'?
+			if(cArray->contents[i] == '-') {
+				sign = -1; //So we have a negative number
+			} else { //No leading '-'
+				int value = (int)(cArray->contents[i] - '0'); //We convert the char representation to int
+				intArray[parsed] = sign * value; //Fill in signed number
+				parsed++;
+				sign = 1;
+			}
+		}
 	}
 }
 
-charArray readFromFile(char* path){
+charArray readFromFile(char* path) {
 	//Handle to file
 	FILE * file;
 	//Size of content
