@@ -37,9 +37,10 @@ static int satellite_cs_generator_register_matrix[][2] = {        {1, 5},       
 
 3. Jede Chipsequenz mit Summensignal (aus Datei) kreuzkorrelieren
 für jeden Satellit
-	für jede mögliche Verschiebung x der Chipsequenz des Satelliten (0..1022)
+	für jede mögliche Verschiebung x der Chipsequenz des Satelliten (0..1022) //modulo 1023 um am ende umzubrechen an array-grenze
 		berechne Skalarprodukt von Satellitenchipsequenz mit Summensignal verschoben um x
 		 ==> Vergleiche
 		  -> < Zero Bit Peak == Satellit hat Bit 0 gesendet
 		  -> > One Bit Peak == Satellit hat Bit 1 gesendet
+		  -> kein Match für Satellit bei jeder Verschiebung => s nicht in Summensignal
 */
