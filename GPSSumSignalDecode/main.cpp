@@ -1,6 +1,16 @@
 #include "main.h"
 
 int main(int argc, char *argv[]){
+	charArray cA;
+	int* intArray = new int[1024];
+
+	cA = readFromFile("gps_sequence_3.txt");
+	charArrayToIntArray(&cA, intArray);
+
+	for(int i=0; i<1024; i++){
+		printf("%d", intArray[i]);
+	}
+	getchar();
 	return 0;
 }
 
