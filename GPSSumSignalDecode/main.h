@@ -9,7 +9,7 @@ struct charArray {
 
 charArray readFromFile(char* path);
 void charArrayToIntArray(charArray* cArray, int* intArray);
-void goldCodeGenerator();
+bool* goldCodeGenerator(int t, int a, int b);
 
 
 /*
