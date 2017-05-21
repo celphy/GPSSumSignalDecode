@@ -10,6 +10,9 @@ int main(int argc, char *argv[]){
 	for(int i=0; i<1023; i++){
 		printf("%d ", intArray[i]);
 	}
+
+	free(goldCodeGenerator(5, 2, 6));
+
 	getchar();
 	return 0;
 }
