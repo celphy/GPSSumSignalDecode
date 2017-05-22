@@ -1,6 +1,83 @@
 #include "main.h"
 
+int satellites[24][3];
+
 int main(int argc, char *argv[]){
+
+	//Gold Code Generator Data Basis
+	satellites[0][0] = 5;
+	satellites[0][1] = 2;
+	satellites[0][2] = 6;
+	satellites[1][0] = 6;
+	satellites[1][1] = 3;
+	satellites[1][2] = 7;
+	satellites[2][0] = 7;
+	satellites[2][1] = 4;
+	satellites[2][2] = 8;
+	satellites[3][0] = 8;
+	satellites[3][1] = 5;
+	satellites[3][2] = 9;
+	satellites[4][0] = 17;
+	satellites[4][1] = 1;
+	satellites[4][2] = 9;
+	satellites[5][0] = 18;
+	satellites[5][1] = 2;
+	satellites[5][2] = 10;
+	satellites[6][0] = 139;
+	satellites[6][1] = 1;
+	satellites[6][2] = 8;
+	satellites[7][0] = 140;
+	satellites[7][1] = 2;
+	satellites[7][2] = 9;
+	satellites[8][0] = 141;
+	satellites[8][1] = 3;
+	satellites[8][2] = 10;
+	satellites[9][0] = 251;
+	satellites[9][1] = 2;
+	satellites[9][2] = 3;
+	satellites[10][0] = 252;
+	satellites[10][1] = 3;
+	satellites[10][2] = 4;
+	satellites[11][0] = 254;
+	satellites[11][1] = 5;
+	satellites[11][0] = 6;
+	satellites[12][1] = 255;
+	satellites[12][2] = 6;
+	satellites[12][0] = 7;
+	satellites[13][1] = 256;
+	satellites[13][0] = 7;
+	satellites[13][1] = 8;
+	satellites[14][0] = 257;
+	satellites[14][1] = 8;
+	satellites[14][2] = 9;
+	satellites[15][0] = 258;
+	satellites[15][1] = 9;
+	satellites[15][2] = 10;
+	satellites[16][0] = 469;
+	satellites[16][1] = 1;
+	satellites[16][2] = 4;
+	satellites[17][0] = 470;
+	satellites[17][1] = 2;
+	satellites[17][2] = 5;
+	satellites[18][0] = 471;
+	satellites[18][1] = 3;
+	satellites[18][2] = 6;
+	satellites[19][0] = 472;
+	satellites[19][1] = 4;
+	satellites[19][0] = 7;
+	satellites[20][1] = 473;
+	satellites[20][0] = 5;
+	satellites[20][1] = 8;
+	satellites[21][2] = 474;
+	satellites[21][0] = 6;
+	satellites[21][1] = 9;
+	satellites[22][2] = 509;
+	satellites[22][0] = 1;
+	satellites[22][1] = 3;
+	satellites[23][2] = 512;
+	satellites[23][2] = 4;
+	satellites[23][2] = 6;
+
 	charArray cA;
 	int* intArray = new int[1023];
 
