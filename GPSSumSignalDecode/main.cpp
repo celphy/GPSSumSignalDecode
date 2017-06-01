@@ -96,15 +96,15 @@ int main(int argc, char *argv[]){
 
 
 //We generate the code sequence here
-bool* goldCodeGenerator(int t, int a, int b) {
+bool* goldCodeGenerator(int t, int a, int b) { //TODO: Find XOR operator for int variable
 	//The two registers needed to calculate stuff
-	bool register1[10], register2[10];
+	int register1[10], register2[10];
 	//Return ouptut - don't forget to free
-	bool* output = (bool*)malloc(sizeof(bool) * 1023);
+	int* output = (bool*)malloc(sizeof(bool) * 1023);
 	//Initialize registers with 1
 	for (int i = 0; i < 10; i++) {
-		register1[i] = true;
-		register2[i] = true;
+		register1[i] = 1;
+		register2[i] = 1;
 	}
 	//Generate 1023 numbers
 	for (int i = 0; i < 1023; i++) {
