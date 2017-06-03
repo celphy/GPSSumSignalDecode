@@ -84,40 +84,69 @@ int main(int argc, char *argv[]){
 	cA = readFromFile("gps_sequence_3.txt");
 	charArrayToIntArray(&cA, intArray);
 
+	int i, j;
+	i = 3;
+	j = 5;
+	int erg = i ^ j;
+	printf("%d", erg);
+
 	for(int i=0; i<1023; i++){
 		printf("%d ", intArray[i]);
 	}
-
-	free(goldCodeGenerator(5, 2, 6));
-
+	
+	int* array = goldCodeGenerator(5, 2, 6);
+	printf("Chip-Sequenz: ");
+	for(int i = 0; i<1023; i++){
+		printf("%d", &array+i);
+	}
+	printf("\n");
+	
+	printf("\nDone\n");
 	getchar();
 	return 0;
 }
 
 
 //We generate the code sequence here
-bool* goldCodeGenerator(int t, int a, int b) { //TODO: Find XOR operator for int variable
+int* goldCodeGenerator(int t, int a, int b) {
 	//The two registers needed to calculate stuff
 	int register1[10], register2[10];
 	//Return ouptut - don't forget to free
-	int* output = (bool*)malloc(sizeof(bool) * 1023);
+	int* output = (int*)malloc(sizeof(int) * 1023);
 	//Initialize registers with 1
 	for (int i = 0; i < 10; i++) {
 		register1[i] = 1;
 		register2[i] = 1;
 	}
+	printf("\n");
 	//Generate 1023 numbers
 	for (int i = 0; i < 1023; i++) {
+		//Print Array1 from Generator
+		printf("Array1 [");
+		for(int j = 0; j < 10; j++){
+			printf("%d", register1[j]);
+		}
+		printf("]\n");
+
+		//Print Array2 from Generator
+		printf("Array2 [");
+		for(int j = 0; j < 10; j++){
+			printf("%d", register2[j]);
+		}
+		printf("]\n");
+		
 		//Calculate output bit
 		output[i] = register1[9] ^ (register2[a-1] ^ register2[b-1]);
-		//Calculate new register bit 0 for 1 and 2
-		register1[0] = register1[9] ^ register1[2];
-		register2[0] = register2[1] ^ register2[2] ^ register2[5] ^ register2[7] ^ register2[8];
-
+		//Shift registers
 		for (int j = 9; j > 0; j--) {
 			register1[j] = register1[j - 1];
 			register2[j] = register2[j - 1];
 		}
+		//Calculate new register bit 0 for 1 and 2
+		register1[0] = register1[9] ^ register1[2];
+		register2[0] = register2[1] ^ register2[2] ^ register2[5] ^ register2[7] ^ register2[8];
+
+		
 		
 	}
 	return output;
