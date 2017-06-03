@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <malloc.h>
 
+#define DEBUG_OUTPUT false
+
 struct charArray {
 	int size;
 	char* contents;

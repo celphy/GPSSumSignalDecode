@@ -40,13 +40,13 @@ int main(int argc, char *argv[]){
 	satellites[10][2] = 4;
 	satellites[11][0] = 254;
 	satellites[11][1] = 5;
-	satellites[11][0] = 6;
-	satellites[12][1] = 255;
-	satellites[12][2] = 6;
-	satellites[12][0] = 7;
-	satellites[13][1] = 256;
-	satellites[13][0] = 7;
-	satellites[13][1] = 8;
+	satellites[11][2] = 6;
+	satellites[12][0] = 255;
+	satellites[12][1] = 6;
+	satellites[12][2] = 7;
+	satellites[13][0] = 256;
+	satellites[13][1] = 7;
+	satellites[13][2] = 8;
 	satellites[14][0] = 257;
 	satellites[14][1] = 8;
 	satellites[14][2] = 9;
@@ -64,22 +64,23 @@ int main(int argc, char *argv[]){
 	satellites[18][2] = 6;
 	satellites[19][0] = 472;
 	satellites[19][1] = 4;
-	satellites[19][0] = 7;
-	satellites[20][1] = 473;
-	satellites[20][0] = 5;
-	satellites[20][1] = 8;
-	satellites[21][2] = 474;
-	satellites[21][0] = 6;
-	satellites[21][1] = 9;
-	satellites[22][2] = 509;
-	satellites[22][0] = 1;
-	satellites[22][1] = 3;
-	satellites[23][2] = 512;
-	satellites[23][2] = 4;
+	satellites[19][2] = 7;
+	satellites[20][0] = 473;
+	satellites[20][1] = 5;
+	satellites[20][2] = 8;
+	satellites[21][0] = 474;
+	satellites[21][1] = 6;
+	satellites[21][2] = 9;
+	satellites[22][0] = 509;
+	satellites[22][1] = 1;
+	satellites[22][2] = 3;
+	satellites[23][0] = 512;
+	satellites[23][1] = 4;
 	satellites[23][2] = 6;
 
 	charArray cA;
 	int* intArray = new int[1023];
+	int* chipSequences[24];
 
 	cA = readFromFile("gps_sequence_3.txt");
 	charArrayToIntArray(&cA, intArray);
@@ -94,13 +95,17 @@ int main(int argc, char *argv[]){
 		printf("%d ", intArray[i]);
 	}
 	
+	for(int i=0; i<24;i++){
+		chipSequences[i] = goldCodeGenerator(satellites[i][0], satellites[i][1], satellites[i][2]);
+		printf("Chip-Sequenz Satellit %d: ", i);
+		for(int j = 0; j<1023; j++){
+			printf("%d ", *(chipSequences[i]+j));
+		}
+		printf("\n");
+	}
 	int* array = goldCodeGenerator(5, 2, 6);
 
-	printf("Chip-Sequenz: ");
-	for(int i = 0; i<1023; i++){
-		printf("%d ", *(array+i));
-	}
-	printf("\n");
+	
 	
 	printf("\nDone\n");
 	getchar();
@@ -123,6 +128,8 @@ int* goldCodeGenerator(int t, int a, int b) {
 	printf("\n");
 	//Generate 1023 numbers
 	for (int i = 0; i < 1023; i++) {
+
+		if(DEBUG_OUTPUT){
 		//Print Array1 from Generator
 		printf("Array1 [");
 		for(int j = 0; j < 10; j++){
@@ -136,7 +143,7 @@ int* goldCodeGenerator(int t, int a, int b) {
 			printf("%d", register2[j]);
 		}
 		printf("]\n");
-		
+		}
 		//Calculate output bit
 		output[i] = register1[9] ^ (register2[a-1] ^ register2[b-1]);
 
