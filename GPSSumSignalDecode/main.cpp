@@ -95,9 +95,10 @@ int main(int argc, char *argv[]){
 	}
 	
 	int* array = goldCodeGenerator(5, 2, 6);
+
 	printf("Chip-Sequenz: ");
 	for(int i = 0; i<1023; i++){
-		printf("%d", &array+i);
+		printf("%d ", *(array+i));
 	}
 	printf("\n");
 	
@@ -109,6 +110,7 @@ int main(int argc, char *argv[]){
 
 //We generate the code sequence here
 int* goldCodeGenerator(int t, int a, int b) {
+	int newRegister1, newRegister2;
 	//The two registers needed to calculate stuff
 	int register1[10], register2[10];
 	//Return ouptut - don't forget to free
@@ -137,14 +139,19 @@ int* goldCodeGenerator(int t, int a, int b) {
 		
 		//Calculate output bit
 		output[i] = register1[9] ^ (register2[a-1] ^ register2[b-1]);
+
+		newRegister1 = register1[9] ^ register1[2];
+		newRegister2 = register2[1] ^ register2[2] ^ register2[5] ^ register2[7] ^ register2[8] ^ register2[9];
+
 		//Shift registers
 		for (int j = 9; j > 0; j--) {
 			register1[j] = register1[j - 1];
 			register2[j] = register2[j - 1];
 		}
+
 		//Calculate new register bit 0 for 1 and 2
-		register1[0] = register1[9] ^ register1[2];
-		register2[0] = register2[1] ^ register2[2] ^ register2[5] ^ register2[7] ^ register2[8];
+		register1[0] = newRegister1;
+		register2[0] = newRegister2;
 
 		
 		
