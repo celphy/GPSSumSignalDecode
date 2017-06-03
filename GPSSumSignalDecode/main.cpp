@@ -99,7 +99,7 @@ int main(int argc, char *argv[]){
 		chipSequences[i] = goldCodeGenerator(satellites[i][0], satellites[i][1], satellites[i][2]);
 		printf("Chip-Sequenz Satellit %d: ", i);
 		for(int j = 0; j<1023; j++){
-			printf("%d ", *(chipSequences[i]+j));
+			printf("%d", *(chipSequences[i]+j));
 		}
 		printf("\n");
 	}
