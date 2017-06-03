@@ -135,7 +135,7 @@ int* goldCodeGenerator(int t, int a, int b) {
 		for(int j = 0; j < 10; j++){
 			printf("%d", register1[j]);
 		}
-		printf("]\n");
+		printf("]   ");
 
 		//Print Array2 from Generator
 		printf("Array2 [");
@@ -146,6 +146,8 @@ int* goldCodeGenerator(int t, int a, int b) {
 		}
 		//Calculate output bit
 		output[i] = register1[9] ^ (register2[a-1] ^ register2[b-1]);
+		if(output[i] == 0 && MINUS_ONE)
+			output[i] = -1;
 
 		newRegister1 = register1[9] ^ register1[2];
 		newRegister2 = register2[1] ^ register2[2] ^ register2[5] ^ register2[7] ^ register2[8] ^ register2[9];

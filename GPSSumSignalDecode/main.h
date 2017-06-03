@@ -3,6 +3,7 @@
 #include <malloc.h>
 
 #define DEBUG_OUTPUT false
+#define MINUS_ONE false
 
 struct charArray {
 	int size;
