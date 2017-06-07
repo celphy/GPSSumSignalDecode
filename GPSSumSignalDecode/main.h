@@ -4,7 +4,7 @@
 #include <math.h>
 
 #define DEBUG_OUTPUT false
-#define MINUS_ONE false
+#define MINUS_ONE true
 
 struct charArray {
 	int size;

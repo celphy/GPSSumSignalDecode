@@ -49,6 +49,7 @@ int main(int argc, char *argv[]){
 	int zero_bit_peak = -MAX_PEAK_SIZE - (NUM_SATELLITES_IN_SIGNAL * possible_correlation_values[0]);// -763
 	int one_bit_peak = MAX_PEAK_SIZE + (NUM_SATELLITES_IN_SIGNAL * possible_correlation_values[0]);// 763
 
+	if(DEBUG_OUTPUT)
 	printf("Zero bit peak %d One bit peak %d\n", zero_bit_peak, one_bit_peak);
 	//Gold Code Generator Data Basis
 
@@ -140,21 +141,22 @@ int main(int argc, char *argv[]){
 	cA = readFromFile("gps_sequence_3.txt");
 	charArrayToIntArray(&cA, intArray);
 
-
+	if(DEBUG_OUTPUT){
 	for(int i=0; i<1023; i++){
 		printf("%d ", intArray[i]);
 	}
 	printf("\n");
+	}
 	
 	for(int i=0; i<24;i++){
 		chipSequences[i] = goldCodeGenerator(satellites[i][0], satellites[i][1], satellites[i][2]);
-		if(DEBUG_OUTPUT || true)
+		if(DEBUG_OUTPUT)
 		printf("Chip-Sequenz Satellit %d: ", i);
 		for(int j = 0; j<1023; j++){
-			if(DEBUG_OUTPUT || true)
+			if(DEBUG_OUTPUT)
 			printf("%d", *(chipSequences[i]+j));
 		}
-		if(DEBUG_OUTPUT || true)
+		if(DEBUG_OUTPUT)
 		printf("\n");
 	}
 	
@@ -169,8 +171,10 @@ int main(int argc, char *argv[]){
 			//printf("Skalarprodukt: %d\n", scalarP);
             if (scalarP > one_bit_peak) {
                 printf("Saltelit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 1, tDelta);
+				break;
             } else if (scalarP < zero_bit_peak) {
                 printf("Saltelit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 0, tDelta);
+				break;
             } else {
 				//Rauschen
             }
