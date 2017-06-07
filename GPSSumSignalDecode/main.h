@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <malloc.h>
+#include <math.h>
 
 #define DEBUG_OUTPUT false
 #define MINUS_ONE false

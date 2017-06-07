@@ -1,19 +1,66 @@
 #include "main.h"
 
 int satellites[24][3];
+int T = 0;
+int A = 1;
+int B = 2;
+
+
+/*
+    Example: 
+    x: [3,7,1]
+    y: [4,1,9]
+    size: 3
+    result = (3 * 4) + (7 * 1) + (1 * 9) = 12 + 7 + 9 = 28
+*/
+int scalarProduct(int* x, int* y, int size){ 
+  int result = 0;
+  for (int i = 0; i < size; i++) {
+      result += x[i] * y[i];
+  }
+  return result; 
+}
+
+int* rotate (int* array, int size, int rotation) {
+    int* newArray = (int*)malloc(size*sizeof(int));
+    for (int i = 0; i < size; i++) {
+        newArray[i] = array[(i + rotation) % size];
+    }
+    return newArray;
+}
+
+
+int REGISTER_LENGTH = 10;
+
+    
+int MAX_PEAK_SIZE = 1023;
+int NUM_SATELLITES_IN_SIGNAL = 4;
+    
+
+
 
 int main(int argc, char *argv[]){
 
+	int possible_correlation_values[3];
+	possible_correlation_values[0] = -pow((double)2, (REGISTER_LENGTH+2)/2)-1;//(int) //(-pow(2, ((REGISTER_LENGTH + 2) / 2))) - 1;// -65
+	possible_correlation_values[1] = -1;
+	possible_correlation_values[2] = pow((double)2, (REGISTER_LENGTH+2)/2)-1;//(int) (pow(2, ((REGISTER_LENGTH + 2) / 2))) - 1;// 63
+
+	int zero_bit_peak = -MAX_PEAK_SIZE - (NUM_SATELLITES_IN_SIGNAL * possible_correlation_values[0]);// -763
+	int one_bit_peak = MAX_PEAK_SIZE + (NUM_SATELLITES_IN_SIGNAL * possible_correlation_values[0]);// 763
+
+	printf("Zero bit peak %d One bit peak %d\n", zero_bit_peak, one_bit_peak);
 	//Gold Code Generator Data Basis
-	satellites[0][0] = 5;
-	satellites[0][1] = 2;
-	satellites[0][2] = 6;
-	satellites[1][0] = 6;
-	satellites[1][1] = 3;
-	satellites[1][2] = 7;
-	satellites[2][0] = 7;
-	satellites[2][1] = 4;
-	satellites[2][2] = 8;
+
+	satellites[0][T] = 5;
+	satellites[0][A] = 2;
+	satellites[0][B] = 6;
+	satellites[1][T] = 6;
+	satellites[1][A] = 3;
+	satellites[1][B] = 7;
+	satellites[2][T] = 7;
+	satellites[2][A] = 4;
+	satellites[2][B] = 8;
 	satellites[3][0] = 8;
 	satellites[3][1] = 5;
 	satellites[3][2] = 9;
@@ -82,31 +129,54 @@ int main(int argc, char *argv[]){
 	int* intArray = new int[1023];
 	int* chipSequences[24];
 
+	if(DEBUG_OUTPUT){
+	int test1[] = { 3, 7, 1 };
+	int test2[] = { 4, 1, 9 };
+	printf("Scalartest: %d", scalarProduct(test1, test2, 3));
+	rotate(test1, 3, 1);
+	printf("test1 : %d %d %d", rotate(test1, 3, 1)[0], rotate(test1, 3, 1)[1], rotate(test1, 3, 1)[2]);
+	}
+
 	cA = readFromFile("gps_sequence_3.txt");
 	charArrayToIntArray(&cA, intArray);
 
-	int i, j;
-	i = 3;
-	j = 5;
-	int erg = i ^ j;
-	printf("%d", erg);
 
 	for(int i=0; i<1023; i++){
 		printf("%d ", intArray[i]);
 	}
+	printf("\n");
 	
 	for(int i=0; i<24;i++){
 		chipSequences[i] = goldCodeGenerator(satellites[i][0], satellites[i][1], satellites[i][2]);
+		if(DEBUG_OUTPUT || true)
 		printf("Chip-Sequenz Satellit %d: ", i);
 		for(int j = 0; j<1023; j++){
+			if(DEBUG_OUTPUT || true)
 			printf("%d", *(chipSequences[i]+j));
 		}
+		if(DEBUG_OUTPUT || true)
 		printf("\n");
 	}
-	int* array = goldCodeGenerator(5, 2, 6);
+	
+	for (int sequenzIndex = 0; sequenzIndex < 24; sequenzIndex++) {
+		printf("Checking satellite %d\n", sequenzIndex+1);
+        int* goldCode = chipSequences[sequenzIndex];
+        for (int tDelta = 0; tDelta < 1022; tDelta++) {
+            int scalarP = scalarProduct(rotate(goldCode, 1023, tDelta), intArray, 1023); // + um tDelta rotieren?
+			//printf("Scalar: %d\n", scalarP);
+            //scalarP(int* goldCodeRotiertUmtDelta, int* summenSignal);
+            //int code = goldCode[tDelta];
+			//printf("Skalarprodukt: %d\n", scalarP);
+            if (scalarP > one_bit_peak) {
+                printf("Saltelit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 1, tDelta);
+            } else if (scalarP < zero_bit_peak) {
+                printf("Saltelit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 0, tDelta);
+            } else {
+				//Rauschen
+            }
+        }
+    }
 
-	
-	
 	printf("\nDone\n");
 	getchar();
 	return 0;
@@ -125,6 +195,7 @@ int* goldCodeGenerator(int t, int a, int b) {
 		register1[i] = 1;
 		register2[i] = 1;
 	}
+	if(DEBUG_OUTPUT)
 	printf("\n");
 	//Generate 1023 numbers
 	for (int i = 0; i < 1023; i++) {
