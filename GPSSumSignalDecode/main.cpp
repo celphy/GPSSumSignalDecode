@@ -153,7 +153,7 @@ int main(int argc, char *argv[]){
 	for(int i=0; i<24;i++){
 		chipSequences[i] = goldCodeGenerator(satellites[i][0], satellites[i][1], satellites[i][2]);
 		if(DEBUG_OUTPUT)
-		printf("Chip-Sequenz Satellit %d: ", i);
+		printf("Chip sequence satellite %d: ", i);
 		for(int j = 0; j<1023; j++){
 			if(DEBUG_OUTPUT)
 			printf("%d", *(chipSequences[i]+j));
@@ -172,10 +172,10 @@ int main(int argc, char *argv[]){
             //int code = goldCode[tDelta];
 			//printf("Skalarprodukt: %d\n", scalarP);
             if (scalarP > one_bit_peak) {
-                printf("Saltellit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 1, tDelta);
+                printf("Satellite %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 1, tDelta);
 				break;
             } else if (scalarP < zero_bit_peak) {
-                printf("Saltellit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 0, tDelta);
+                printf("Satellite %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 0, tDelta);
 				break;
             } else {
 				//Rauschen
