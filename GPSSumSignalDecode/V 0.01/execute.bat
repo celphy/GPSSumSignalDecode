@@ -1,0 +1,4 @@
+GPSSumSignalDecode.exe gps_sequence_1.txt
+GPSSumSignalDecode.exe gps_sequence_2.txt
+GPSSumSignalDecode.exe gps_sequence_3.txt
+PAUSE

@@ -138,7 +138,9 @@ int main(int argc, char *argv[]){
 	printf("test1 : %d %d %d", rotate(test1, 3, 1)[0], rotate(test1, 3, 1)[1], rotate(test1, 3, 1)[2]);
 	}
 
-	cA = readFromFile("gps_sequence_3.txt");
+	cA = readFromFile(argv[1]);
+	if(cA.size == 0)
+		return 0;
 	charArrayToIntArray(&cA, intArray);
 
 	if(DEBUG_OUTPUT){
@@ -170,10 +172,10 @@ int main(int argc, char *argv[]){
             //int code = goldCode[tDelta];
 			//printf("Skalarprodukt: %d\n", scalarP);
             if (scalarP > one_bit_peak) {
-                printf("Saltelit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 1, tDelta);
+                printf("Saltellit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 1, tDelta);
 				break;
             } else if (scalarP < zero_bit_peak) {
-                printf("Saltelit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 0, tDelta);
+                printf("Saltellit %d has sent bit %d (delta %d)\n", sequenzIndex + 1, 0, tDelta);
 				break;
             } else {
 				//Rauschen
@@ -265,6 +267,12 @@ void charArrayToIntArray(charArray* cArray, int* intArray){
 }
 
 charArray readFromFile(char* path) {
+	if(path == NULL)
+	{
+		charArray r;
+		r.size = 0;
+		return r;
+	}
 	//Handle to file
 	FILE * file;
 	//Size of content
